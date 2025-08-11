@@ -12,6 +12,7 @@ export interface AuthState {
     setToken: (token: string) => void;
     setAuth: (auth: Auth) => void;
     login: (username: string, password: string) => void;
+    loginWithToken: (token: string) => void;
     logout: () => void;
 }
 
@@ -35,6 +36,19 @@ export const createAuthSlice: StateCreator<AuthState> = (set) => ({
             }
             const { token, ...auth } = response;
             set({ token, auth, loading: false, error: null });
+        } catch (error) {
+            set({ loading: false, error: (error as Error).message });
+        }
+    },
+    loginWithToken: (loginToken: string) => {
+        set({ loading: true, error: null });
+        try {
+            const response = authRepository.loginWithToken(loginToken);
+            if (!response) {
+                set({ loading: false, error: 'Invalid username or password', token: null, auth: null });
+                return;
+            }
+            set({ token: loginToken, auth: response, loading: false, error: null });
         } catch (error) {
             set({ loading: false, error: (error as Error).message });
         }

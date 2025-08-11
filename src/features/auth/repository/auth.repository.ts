@@ -6,4 +6,8 @@ export const authRepository = {
         const data = authDB.login(username, password);
         return data ? { ...data, token: data.id } : null;
     },
+    loginWithToken(token: string): Auth | null {
+        const data = authDB.loginWithToken(token);
+        return data ?? null;
+    },
 };

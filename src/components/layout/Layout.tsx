@@ -28,7 +28,7 @@ export default function Layout({
                 {/* Content area */}
                 <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
                     {/* Site header */}
-                    <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                    <Header />
 
                     {/* Main content */}
                     <main className='ml-64 mt-16 p-6'>{children}</main>

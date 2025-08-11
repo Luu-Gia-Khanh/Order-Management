@@ -14,4 +14,12 @@ export const authDB = {
         const auth = mapJsonToAuth(authItem);
         return { ...auth, token: auth.id };
     },
+
+    loginWithToken: (token: string): Auth | null => {
+        const authItem = authDb.find((item) => item.id === token);
+        if (!authItem) {
+            return null;
+        }
+        return mapJsonToAuth(authItem);
+    },
 };
