@@ -3,11 +3,8 @@
 import MetricsCard from '@/features/dashboard/components/MetricsCard';
 import OrderStatusChart from '@/features/dashboard/components/OrderStatusChart';
 import RecentOrders from '@/features/dashboard/components/RecentOrders';
-import { useState } from 'react';
 
 export default function Dashboard() {
-    const [activeTab, setActiveTab] = useState('dashboard');
-
     return (
         <>
             <div className='mb-6'>

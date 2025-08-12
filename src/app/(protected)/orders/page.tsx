@@ -1,6 +1,6 @@
 'use client';
 
-import CreateOrderModal from '@/features/orders/components/CreateOrderModal';
+import CreateOrderModal from '@/features/orders/components/modal/CreateOrderModal';
 import OrderFilters from '@/features/orders/components/OrderFilters';
 import OrdersTable from '@/features/orders/components/OrdersTable';
 import { useState } from 'react';
@@ -28,7 +28,7 @@ export default function Orders() {
 
             <OrderFilters />
             <OrdersTable />
-            <CreateOrderModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            {isOpen && <CreateOrderModal isOpen={isOpen} onClose={() => setIsOpen(false)} />}
         </>
     );
 }

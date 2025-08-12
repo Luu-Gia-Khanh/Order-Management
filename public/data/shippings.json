@@ -1,0 +1,82 @@
+[
+  {
+    "id": "GHN001",
+    "name": "Giao Hàng Nhanh (GHN)",
+    "contactPhone": "1900636098",
+    "description": "Dịch vụ giao hàng nhanh toàn quốc, giao trong 2-4 giờ tại nội thành",
+    "baseFee": "25000",
+    "status": "active",
+    "createdAt": "2025-01-05T08:30:00Z",
+    "updatedAt": "2025-08-01T09:45:00Z"
+  },
+  {
+    "id": "GHTK001",
+    "name": "Giao Hàng Tiết Kiệm (GHTK)",
+    "contactPhone": "19006092",
+    "description": "Dịch vụ giao hàng tiết kiệm, hỗ trợ thu hộ COD",
+    "baseFee": "22000",
+    "status": "active",
+    "createdAt": "2025-02-10T10:15:00Z",
+    "updatedAt": "2025-08-02T14:20:00Z"
+  },
+  {
+    "id": "VNPOST001",
+    "name": "VNPost",
+    "contactPhone": "1900545481",
+    "description": "Bưu điện Việt Nam, dịch vụ EMS và chuyển phát nhanh",
+    "baseFee": "20000",
+    "status": "active",
+    "createdAt": "2025-03-01T09:00:00Z",
+    "updatedAt": "2025-08-03T08:10:00Z"
+  },
+  {
+    "id": "VTPOST001",
+    "name": "Viettel Post",
+    "contactPhone": "19008095",
+    "description": "Dịch vụ giao hàng Viettel Post, có hỗ trợ giao hỏa tốc",
+    "baseFee": "23000",
+    "status": "active",
+    "createdAt": "2025-03-15T07:45:00Z",
+    "updatedAt": "2025-08-04T15:50:00Z"
+  },
+  {
+    "id": "AHA001",
+    "name": "AhaMove",
+    "contactPhone": "1900545411",
+    "description": "Dịch vụ giao hàng nội thành nhanh chóng bằng xe máy và xe tải nhỏ",
+    "baseFee": "30000",
+    "status": "active",
+    "createdAt": "2025-04-05T11:20:00Z",
+    "updatedAt": "2025-08-05T09:30:00Z"
+  },
+  {
+    "id": "BEE001",
+    "name": "Bee Delivery",
+    "contactPhone": "1900232345",
+    "description": "Dịch vụ giao hàng nhanh bằng xe máy, tích hợp với ứng dụng Bee",
+    "baseFee": "28000",
+    "status": "inactive",
+    "createdAt": "2025-04-20T08:10:00Z",
+    "updatedAt": "2025-08-06T10:15:00Z"
+  },
+  {
+    "id": "NOW001",
+    "name": "Now Ship",
+    "contactPhone": "19002030",
+    "description": "Dịch vụ giao hàng nhanh nội thành, tích hợp với ShopeeFood",
+    "baseFee": "27000",
+    "status": "active",
+    "createdAt": "2025-05-10T12:00:00Z",
+    "updatedAt": "2025-08-07T14:40:00Z"
+  },
+  {
+    "id": "GRAB001",
+    "name": "GrabExpress",
+    "contactPhone": "19007177",
+    "description": "Dịch vụ giao hàng nhanh GrabExpress bằng xe máy và ô tô",
+    "baseFee": "32000",
+    "status": "active",
+    "createdAt": "2025-05-25T09:50:00Z",
+    "updatedAt": "2025-08-08T08:25:00Z"
+  }
+]

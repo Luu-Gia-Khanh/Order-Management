@@ -1,0 +1,46 @@
+[
+  {
+    "id": "pm_001",
+    "code": "CASH",
+    "name": "Tiền mặt",
+    "description": "Thanh toán trực tiếp bằng tiền mặt",
+    "requiresBankInfo": false,
+    "requiresPaymentDays": false,
+    "status": "active",
+    "createdAt": "2025-01-01T08:00:00.000Z",
+    "updatedAt": "2025-01-01T08:00:00.000Z"
+  },
+  {
+    "id": "pm_002",
+    "code": "BANK_TRANSFER",
+    "name": "Chuyển khoản ngân hàng",
+    "description": "Thanh toán qua chuyển khoản ngân hàng",
+    "requiresBankInfo": true,
+    "requiresPaymentDays": false,
+    "status": "active",
+    "createdAt": "2025-01-01T08:00:00.000Z",
+    "updatedAt": "2025-01-01T08:00:00.000Z"
+  },
+  {
+    "id": "pm_003",
+    "code": "COD",
+    "name": "Thanh toán khi nhận hàng (COD)",
+    "description": "Trả tiền khi nhận hàng",
+    "requiresBankInfo": false,
+    "requiresPaymentDays": false,
+    "status": "active",
+    "createdAt": "2025-01-01T08:00:00.000Z",
+    "updatedAt": "2025-01-01T08:00:00.000Z"
+  },
+  {
+    "id": "pm_006",
+    "code": "INSTALLMENT",
+    "name": "Công nợ",
+    "description": "Thanh toán nhiều đợt theo hợp đồng trả góp",
+    "requiresBankInfo": false,
+    "requiresPaymentDays": true,
+    "status": "inactive",
+    "createdAt": "2025-01-01T08:00:00.000Z",
+    "updatedAt": "2025-01-01T08:00:00.000Z"
+  }
+]

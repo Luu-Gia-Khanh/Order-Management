@@ -2,10 +2,19 @@
 
 import { DotsLoading } from '@/components/ui/Loading';
 import { useAuthManager } from '@/features/auth/hook/useAuthManager';
+import { useCustomerManager } from '@/features/customers/hook/useCustomerManager';
+import { useProductManager } from '@/features/products/hook/useProductManager';
+import { useShippingManager } from '@/features/shipping/hook/useShippingManager';
+import { usePaymentManager } from '@/hooks/usePaymentManager';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
+    const { fetchCustomers } = useCustomerManager();
+    const { fetchProducts } = useProductManager();
+    const { fetchShippings } = useShippingManager();
+    const { fetchPaymentMethods } = usePaymentManager();
+
     const router = useRouter();
     const { token, hydrated, loginWithToken } = useAuthManager();
     const [checking, setChecking] = useState(true);
@@ -16,9 +25,13 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
             router.replace('/login');
         } else {
             loginWithToken(token);
+            fetchCustomers();
+            fetchProducts();
+            fetchShippings();
+            fetchPaymentMethods();
             setChecking(false);
         }
-    }, [hydrated, loginWithToken, router, token]);
+    }, [fetchCustomers, fetchProducts, fetchShippings, fetchPaymentMethods, hydrated, loginWithToken, router, token]);
 
     if (checking) {
         return (
