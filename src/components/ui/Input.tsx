@@ -5,6 +5,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     error?: string;
     helperText?: string;
     fullWidth?: boolean;
+    type?: string;
 }
 
 const Input: React.FC<InputProps> = ({ label, error, helperText, fullWidth = true, className = '', ...props }) => {
@@ -22,7 +23,11 @@ const Input: React.FC<InputProps> = ({ label, error, helperText, fullWidth = tru
                 </label>
             )}
 
-            <input className={`${baseClasses} ${errorClasses} ${widthClass} ${className} text-black`} {...props} />
+            <input
+                type={props.type || 'text'}
+                className={`${baseClasses} ${errorClasses} ${widthClass} ${className} text-black`}
+                {...props}
+            />
 
             {error && <p className='mt-1 text-sm text-red-600'>{error}</p>}
 

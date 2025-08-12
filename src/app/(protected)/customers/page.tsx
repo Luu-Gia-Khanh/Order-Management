@@ -1,9 +1,25 @@
+'use client';
+
+import { DotsLoading } from '@/components/ui/Loading';
+import CreateCustomerModal from '@/features/customers/components/CreateCustomerModal';
 import CustomerTable from '@/features/customers/components/CustomerTable';
-import React from 'react';
+import { useCustomerManager } from '@/features/customers/hook/useCustomerManager';
+import React, { useEffect, useState } from 'react';
 
 export default function CustomersPage() {
+    const { loading, customers, fetchCustomers } = useCustomerManager();
+    const [isCreateCustomerDialogOpen, setCreateCustomerDialogOpen] = useState(false);
+
+    useEffect(() => {
+        fetchCustomers();
+    }, [fetchCustomers]);
     return (
         <>
+            {loading && (
+                <div className='fixed inset-0 flex items-center justify-center z-50 bg-black/40'>
+                    <DotsLoading />
+                </div>
+            )}
             <div className='mb-6'>
                 <div className='flex items-center justify-between'>
                     <div>
@@ -12,13 +28,20 @@ export default function CustomersPage() {
                             <span>Dashboard</span> <span className='mx-2'>/</span> <span>Khách hàng</span>
                         </nav>
                     </div>
-                    ``
-                    <button className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors'>
+
+                    <button
+                        className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors'
+                        onClick={() => setCreateCustomerDialogOpen(true)}
+                    >
                         <span>Thêm khách hàng mới</span>
                     </button>
                 </div>
             </div>
-            <CustomerTable />
+            <CustomerTable customers={customers} />
+            <CreateCustomerModal
+                isOpen={isCreateCustomerDialogOpen}
+                onClose={() => setCreateCustomerDialogOpen(false)}
+            />
         </>
     );
 }

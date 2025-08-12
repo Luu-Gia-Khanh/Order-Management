@@ -1,4 +1,8 @@
-export default function CustomerTable() {
+'use client';
+
+import { Customer } from '../types/Customer';
+
+export default function CustomerTable({ customers }: { customers: Customer[] }) {
     const columns = [
         {
             key: 'id',
@@ -16,19 +20,10 @@ export default function CustomerTable() {
             key: 'address',
             name: 'Địa chỉ',
         },
-        {
-            key: 'actions',
-            name: '',
-        },
-    ];
-
-    const rows = [
-        {
-            id: 'KH001',
-            name: 'Nguyễn Văn A',
-            phone: '0123456789',
-            address: '123 Đường ABC, Quận 1, TP.HCM',
-        },
+        // {
+        //     key: 'actions',
+        //     name: '',
+        // },
     ];
 
     return (
@@ -63,7 +58,7 @@ export default function CustomerTable() {
                         </tr>
                     </thead>
                     <tbody className='bg-white divide-y divide-gray-200'>
-                        {rows.map((row) => (
+                        {customers.map((row) => (
                             <tr key={row.id} className='hover:bg-gray-50'>
                                 {columns.map((column) => {
                                     if (column.key === 'actions') {
@@ -98,13 +93,15 @@ export default function CustomerTable() {
                                             </td>
                                         );
                                     } else {
+                                        const value = row[column.key as keyof typeof row];
                                         return (
                                             <td
                                                 key={column.key}
                                                 className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'
                                             >
-                                                {/* {row[column.key]} */}
-                                                {row[column.key as keyof typeof row] || ''}
+                                                {value instanceof Date
+                                                    ? value.toLocaleDateString() // hoặc toISOString(), format bạn muốn
+                                                    : value || ''}
                                             </td>
                                         );
                                     }
@@ -114,7 +111,7 @@ export default function CustomerTable() {
                     </tbody>
                 </table>
             </div>
-            <div className='px-6 py-3 border-t border-gray-200 flex items-center justify-between'>
+            {/* <div className='px-6 py-3 border-t border-gray-200 flex items-center justify-between'>
                 <div className='text-sm text-gray-700'>
                     Hiển thị <span className='font-medium'>1</span> đến <span className='font-medium'>10</span> của{' '}
                     <span className='font-medium'>97</span> kết quả
@@ -126,7 +123,7 @@ export default function CustomerTable() {
                     <button className='px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50'>3</button>
                     <button className='px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50'>Sau</button>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

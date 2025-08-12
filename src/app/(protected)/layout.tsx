@@ -1,12 +1,13 @@
 'use client';
 
+import { DotsLoading } from '@/components/ui/Loading';
 import { useAuthManager } from '@/features/auth/hook/useAuthManager';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
-    const { token, hydrated } = useAuthManager();
+    const { token, hydrated, loginWithToken } = useAuthManager();
     const [checking, setChecking] = useState(true);
 
     useEffect(() => {
@@ -14,13 +15,16 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
         if (!token) {
             router.replace('/login');
         } else {
+            loginWithToken(token);
             setChecking(false);
         }
-    }, [hydrated, router, token]);
+    }, [hydrated, loginWithToken, router, token]);
 
     if (checking) {
         return (
-            <div className='flex justify-center items-center h-screen text-4xl bg-white text-primary'>Loading...</div>
+            <div className='flex items-center justify-center h-screen bg-gray-50'>
+                <DotsLoading />
+            </div>
         );
     }
     return <>{children}</>;

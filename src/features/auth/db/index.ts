@@ -1,4 +1,4 @@
-import authDb from '../../../../public/data/auth.json';
+import authDb from '../../../../public/data/auths.json';
 import { Auth } from '../types/Auth';
 import { mapJsonToAuth } from '../utils/auth.util';
 
