@@ -4,25 +4,21 @@ import { FaCheck } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 
 type ActionButtonsProps = {
+    isValid: boolean;
     onCreate: () => void;
     onCancel: () => void;
 };
-const ActionButtons = ({ onCreate, onCancel }: ActionButtonsProps) => {
-    const createOrder = () => {
-        // Validate and create order logic
-        alert('Đơn hàng đã được tạo thành công!');
-    };
-
+const ActionButtons = ({ isValid, onCreate, onCancel }: ActionButtonsProps) => {
     const cancelOrder = () => {
         if (confirm('Bạn có chắc chắn muốn hủy tạo đơn hàng?')) {
-            // Reset form or redirect
-            window.location.reload();
+            onCancel();
         }
     };
 
     return (
         <div className='flex flex-col sm:flex-row gap-4 mt-8 justify-center'>
             <Button
+                disabled={!isValid}
                 onClick={onCreate}
                 className='flex justify-center items-center btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg'
             >
@@ -31,7 +27,7 @@ const ActionButtons = ({ onCreate, onCancel }: ActionButtonsProps) => {
             </Button>
             <Button
                 variant='secondary'
-                onClick={onCancel}
+                onClick={cancelOrder}
                 className='flex justify-center items-center bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors'
             >
                 <IoClose className='fas fa-times mr-2 text-3xl' />

@@ -1,5 +1,5 @@
 import { DeliveryOrderInformation } from '@/features/orders/types/DeliveryOrderInformation';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { MdLocalShipping } from 'react-icons/md';
 import ChooseDeliveryModal from './delivery/ChooseDeliveryModal';
 import Button from '@/components/ui/Button';
@@ -39,6 +39,21 @@ const ShippingInfo = ({ deliveryInfo, setDeliveryInfo }: ShippingInfoProps) => {
         return shippings.find((shipping) => shipping.id === deliveryInfo?.shippingUnitId);
     }, [shippings, deliveryInfo]);
 
+    const deliveryDate = useMemo(() => {
+        if (!deliveryInfo?.deliveryDate) {
+            return '';
+        }
+
+        const dateObj =
+            deliveryInfo.deliveryDate instanceof Date ? deliveryInfo.deliveryDate : new Date(deliveryInfo.deliveryDate);
+
+        return dateObj.toISOString().split('T')[0];
+    }, [deliveryInfo?.deliveryDate]);
+
+    useEffect(() => {
+        console.log('deliveryInfo changed:', deliveryInfo);
+    }, [deliveryInfo]);
+
     return (
         <div className='section-card p-6'>
             <div className='flex items-center mb-4'>
@@ -51,7 +66,7 @@ const ShippingInfo = ({ deliveryInfo, setDeliveryInfo }: ShippingInfoProps) => {
                     <label className='block text-sm font-medium text-gray-700 mb-2'>Ngày giao hàng</label>
                     <input
                         type='date'
-                        value={deliveryInfo?.deliveryDate ? deliveryInfo.deliveryDate.toISOString().split('T')[0] : ''}
+                        value={deliveryDate}
                         className='form-input w-full p-3 text-gray-700'
                         onChange={(e) => handleDateChange('deliveryDate', new Date(e.target.value))}
                     />

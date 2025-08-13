@@ -6,4 +6,12 @@ export const paymentRepository = {
     async fetchAllPaymentMethods(): Promise<PaymentMethod[]> {
         return paymentDb.map(mapJsonToPaymentMethod);
     },
+
+    getPaymentById(paymentMethodId: string): PaymentMethod | null {
+        const paymentMethod = paymentDb.find((payment) => payment.id === paymentMethodId);
+        if (!paymentMethod) {
+            return null;
+        }
+        return mapJsonToPaymentMethod(paymentMethod);
+    },
 };

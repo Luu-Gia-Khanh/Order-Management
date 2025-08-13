@@ -15,11 +15,14 @@ export function useAuthManager() {
         login(username, password);
     };
 
+    const fetchAuths = useAppStore((state) => state.fetchAuths);
+
     return {
         token,
         auth,
         hydrated,
         error,
+        fetchAuths,
         userLogin,
         loginWithToken,
         logout,

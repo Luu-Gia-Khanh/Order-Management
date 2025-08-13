@@ -1,9 +1,11 @@
 'use client';
 
+import Button from '@/components/ui/Button';
 import CreateOrderModal from '@/features/orders/components/modal/CreateOrderModal';
 import OrderFilters from '@/features/orders/components/OrderFilters';
 import OrdersTable from '@/features/orders/components/OrdersTable';
 import { useState } from 'react';
+import { BiSolidLayerPlus } from 'react-icons/bi';
 
 export default function Orders() {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,18 +19,21 @@ export default function Orders() {
                             <span>Dashboard</span> <span className='mx-2'>/</span> <span>Đơn hàng</span>
                         </nav>
                     </div>
-                    <button
+                    <Button
                         className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center transition-colors'
                         onClick={() => setIsOpen(true)}
                     >
+                        <BiSolidLayerPlus className='mr-2' />
                         <span>Tạo đơn hàng</span>
-                    </button>
+                    </Button>
                 </div>
             </div>
 
             <OrderFilters />
             <OrdersTable />
-            {isOpen && <CreateOrderModal isOpen={isOpen} onClose={() => setIsOpen(false)} />}
+            {isOpen && (
+                <CreateOrderModal isOpen={isOpen} isUpdate={false} orderInfo={null} onClose={() => setIsOpen(false)} />
+            )}
         </>
     );
 }

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1755054100666",
+    "accountNumber": "123123",
+    "bankName": "ACB",
+    "createdAt": "2025-08-13T03:01:40.666Z",
+    "updatedAt": "2025-08-13T03:01:40.666Z"
+  },
+  {
+    "id": "1755055026194",
+    "accountNumber": "123123",
+    "bankName": "ACB",
+    "createdAt": "2025-08-13T03:17:06.194Z",
+    "updatedAt": "2025-08-13T03:17:06.194Z"
+  },
+  {
+    "id": "1755056244829",
+    "accountNumber": "123123",
+    "bankName": "ACB",
+    "createdAt": "2025-08-13T03:37:24.829Z",
+    "updatedAt": "2025-08-13T03:37:24.829Z"
+  },
+  {
+    "id": "1755056329765",
+    "accountNumber": "123123",
+    "bankName": "ACB",
+    "createdAt": "2025-08-13T03:38:49.765Z",
+    "updatedAt": "2025-08-13T03:38:49.765Z"
+  },
+  {
+    "id": "1755056421405",
+    "accountNumber": "123123",
+    "bankName": "ACB",
+    "createdAt": "2025-08-13T03:40:21.405Z",
+    "updatedAt": "2025-08-13T03:40:21.405Z"
+  },
+  {
+    "id": "1755056461494",
+    "accountNumber": "123123",
+    "bankName": "ACB",
+    "createdAt": "2025-08-13T03:41:01.494Z",
+    "updatedAt": "2025-08-13T03:41:01.494Z"
+  },
+  {
+    "id": "1755056492706",
+    "accountNumber": "123123",
+    "bankName": "ACB",
+    "createdAt": "2025-08-13T03:41:32.706Z",
+    "updatedAt": "2025-08-13T03:41:32.706Z"
+  },
+  {
+    "id": "1755056959320",
+    "accountNumber": "123123",
+    "bankName": "ACB",
+    "createdAt": "2025-08-13T03:49:19.321Z",
+    "updatedAt": "2025-08-13T03:49:19.321Z"
+  }
+]

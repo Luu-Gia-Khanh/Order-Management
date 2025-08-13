@@ -2,7 +2,11 @@
 
 import { DotsLoading } from '@/components/ui/Loading';
 import { useAuthManager } from '@/features/auth/hook/useAuthManager';
+import { useBankAccountManager } from '@/features/bank-account/hook/useBankAccountManager';
 import { useCustomerManager } from '@/features/customers/hook/useCustomerManager';
+import { useOrderItemManager } from '@/features/order-item/hook/useOrderItemManager';
+import { useOrderStatusHistoryManager } from '@/features/order-status-history/hook/useOrderStatusHistoryManager';
+import { useOrderManager } from '@/features/orders/hook/useOrderManager';
 import { useProductManager } from '@/features/products/hook/useProductManager';
 import { useShippingManager } from '@/features/shipping/hook/useShippingManager';
 import { usePaymentManager } from '@/hooks/usePaymentManager';
@@ -14,9 +18,13 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
     const { fetchProducts } = useProductManager();
     const { fetchShippings } = useShippingManager();
     const { fetchPaymentMethods } = usePaymentManager();
+    const { fetchOrders } = useOrderManager();
+    const { fetchBankAccounts } = useBankAccountManager();
+    const { fetchOrderItems } = useOrderItemManager();
+    const { fetchAllOrderStatusHistory } = useOrderStatusHistoryManager();
 
     const router = useRouter();
-    const { token, hydrated, loginWithToken } = useAuthManager();
+    const { token, hydrated, loginWithToken, fetchAuths } = useAuthManager();
     const [checking, setChecking] = useState(true);
 
     useEffect(() => {
@@ -29,9 +37,28 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
             fetchProducts();
             fetchShippings();
             fetchPaymentMethods();
+            fetchOrders();
+            fetchBankAccounts();
+            fetchOrderItems();
+            fetchAuths();
+            fetchAllOrderStatusHistory();
             setChecking(false);
         }
-    }, [fetchCustomers, fetchProducts, fetchShippings, fetchPaymentMethods, hydrated, loginWithToken, router, token]);
+    }, [
+        fetchCustomers,
+        fetchProducts,
+        fetchShippings,
+        fetchPaymentMethods,
+        hydrated,
+        loginWithToken,
+        router,
+        token,
+        fetchOrders,
+        fetchBankAccounts,
+        fetchOrderItems,
+        fetchAuths,
+        fetchAllOrderStatusHistory,
+    ]);
 
     if (checking) {
         return (

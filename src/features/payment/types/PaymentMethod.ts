@@ -9,3 +9,10 @@ export interface PaymentMethod {
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+export enum PaymentMethodType {
+    CASH = 'CASH',
+    BANK_TRANSFER = 'BANK_TRANSFER',
+    COD = 'COD',
+    INSTALLMENT = 'INSTALLMENT',
+}

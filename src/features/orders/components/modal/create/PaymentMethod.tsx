@@ -1,5 +1,5 @@
 import { usePaymentManager } from '@/hooks/usePaymentManager';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FaCreditCard } from 'react-icons/fa';
 import { Radio, RadioGroup } from '@headlessui/react';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
@@ -14,23 +14,32 @@ const PaymentMethod = ({ paymentInfo, setPaymentInfo }: PaymentMethodProps) => {
     const { payments } = usePaymentManager();
     const { bankName, accountNumber, paymentDays, id } = paymentInfo || {};
 
-    const handleChangeValue = (key: keyof PaymentOrderInfo, value: string | number | null) => {
-        setPaymentInfo((prev) => {
-            if (!prev) {
+    const handleChangeValue = useCallback(
+        (key: keyof PaymentOrderInfo, value: string | number | null) => {
+            setPaymentInfo((prev) => {
+                if (!prev) {
+                    return {
+                        id: '',
+                        paymentDays: null,
+                        bankName: '',
+                        accountNumber: '',
+                        [key]: value,
+                    };
+                }
                 return {
-                    id: '',
-                    paymentDays: null,
-                    bankName: '',
-                    accountNumber: '',
+                    ...prev,
                     [key]: value,
                 };
-            }
-            return {
-                ...prev,
-                [key]: value,
-            };
-        });
-    };
+            });
+        },
+        [setPaymentInfo]
+    );
+
+    useEffect(() => {
+        if (!id) {
+            handleChangeValue('id', payments[0]?.id || '');
+        }
+    }, [handleChangeValue, id, payments]);
 
     return (
         <div className='section-card p-6'>

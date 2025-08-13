@@ -10,4 +10,7 @@ export const authRepository = {
         const data = authDB.loginWithToken(token);
         return data ?? null;
     },
+    getAll(): Auth[] {
+        return authDB.getAllAuths();
+    },
 };

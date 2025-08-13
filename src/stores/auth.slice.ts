@@ -5,6 +5,7 @@ import { StateCreator } from 'zustand';
 export interface AuthState {
     token: string | null;
     auth: Auth | null;
+    auths: Auth[];
     loading: boolean;
     error: string | null;
     hydrated: boolean;
@@ -14,15 +15,27 @@ export interface AuthState {
     login: (username: string, password: string) => void;
     loginWithToken: (token: string) => void;
     logout: () => void;
+
+    fetchAuths: () => void;
 }
 
 export const createAuthSlice: StateCreator<AuthState> = (set) => ({
     token: null,
     auth: null,
+    auths: [],
     loading: false,
     error: null,
     hydrated: false,
 
+    fetchAuths: () => {
+        set({ loading: true, error: null });
+        try {
+            const auths = authRepository.getAll();
+            set({ auths, loading: false, error: null });
+        } catch (error) {
+            set({ loading: false, error: (error as Error).message });
+        }
+    },
     setToken: (token: string | null) => set({ token }),
     setAuth: (auth: Auth | null) => set({ auth }),
     logout: () => set({ token: null, auth: null }),

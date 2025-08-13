@@ -1,0 +1,35 @@
+[
+  {
+    "id": "1755076758106",
+    "orderId": "ORD-250813-UL0XJ7",
+    "productId": "2",
+    "productName": "iPhone 15 Pro Max",
+    "price": 34990000,
+    "quantity": 1,
+    "subtotal": 34990000,
+    "note": "",
+    "createdAt": "2025-08-13T10:47:09.021Z"
+  },
+  {
+    "id": "1755093203614",
+    "orderId": "ORD-250813-DDZ7OI",
+    "productId": "1",
+    "productName": "Laptop Dell XPS 13",
+    "price": 32990000,
+    "quantity": 1,
+    "subtotal": 32990000,
+    "note": "",
+    "createdAt": "2025-08-13T13:53:23.614Z"
+  },
+  {
+    "id": "1755102264439",
+    "orderId": "ORD-250813-EAXJEH",
+    "productId": "1",
+    "productName": "Laptop Dell XPS 13",
+    "price": 32990000,
+    "quantity": 1,
+    "subtotal": 32990000,
+    "note": "",
+    "createdAt": "2025-08-13T16:24:24.439Z"
+  }
+]

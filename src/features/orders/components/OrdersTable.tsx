@@ -1,39 +1,41 @@
-export default function OrdersTable() {
-    const orders = [
-        {
-            id: 'DH001',
-            customer: 'Nguyễn Văn A',
-            phone: '0123456789',
-            date: '15/12/2024',
-            status: 'Hoàn thành',
-            statusColor: 'bg-green-100 text-green-800',
-            admin: 'Admin Nguyễn',
-            amount: '2,500,000đ',
-        },
-        {
-            id: 'DH002',
-            customer: 'Trần Thị B',
-            phone: '0987654321',
-            date: '16/12/2024',
-            status: 'Đang xử lý',
-            statusColor: 'bg-yellow-100 text-yellow-800',
-            admin: 'Admin Trần',
-            amount: '1,800,000đ',
-        },
-    ];
+'use client';
+import { formatCurrency } from '@/utils/currency.util';
+import { useOrderManager } from '../hook/useOrderManager';
+import { formatDate } from '@/utils/date.util';
+import { useState } from 'react';
+import CreateOrderModal from './modal/CreateOrderModal';
+import { OrderFullInfo } from '../types/Order';
+import DeleteModal from '@/components/ui/modal/DeleteModal';
+import { useRouter } from 'next/navigation';
+import { mapingOrderStatus, statusColors } from '@/utils/status.util';
 
+export default function OrdersTable() {
+    const router = useRouter();
+    const { ordersFullInfo, deleteOrder } = useOrderManager();
+    const [isOpen, setIsOpen] = useState(false);
+    const [isShowDelete, setIsShowDelete] = useState(false);
+    const [activeOrder, setActiveOrder] = useState<OrderFullInfo | null>(null);
+
+    if (ordersFullInfo.length === 0) {
+        return (
+            <div className='section-card p-6 text-center'>
+                <h2 className='text-xl font-semibold text-gray-900'>Không có đơn hàng nào</h2>
+                <p className='text-gray-600'></p>
+            </div>
+        );
+    }
     return (
         <div className='bg-white rounded-xl shadow-sm border border-gray-100'>
             <div className='p-6 border-b border-gray-100'>
                 <div className='flex items-center justify-between'>
                     <h3 className='text-lg font-semibold text-gray-800'>Danh sách đơn hàng</h3>
                     <div className='flex items-center space-x-2'>
-                        <button className='text-gray-600 hover:text-gray-800 px-3 py-1 rounded text-sm'>
+                        {/* <button className='text-gray-600 hover:text-gray-800 px-3 py-1 rounded text-sm'>
                             <span>Xuất Excel</span>
                         </button>
                         <button className='text-red-600 hover:text-red-700 px-3 py-1 rounded text-sm'>
                             <span>Xóa đã chọn</span>
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>
@@ -68,42 +70,65 @@ export default function OrdersTable() {
                         </tr>
                     </thead>
                     <tbody className='bg-white divide-y divide-gray-200'>
-                        {orders.map((order) => (
+                        {ordersFullInfo.map((order) => (
                             <tr key={order.id} className='hover:bg-gray-50'>
                                 <td className='px-6 py-4'>
                                     <input type='checkbox' className='rounded border-gray-300' />
                                 </td>
                                 <td className='px-6 py-4 whitespace-nowrap'>
-                                    <div className='text-sm font-medium text-gray-900'>#{order.id}</div>
+                                    <div className='text-sm font-medium text-gray-900'>
+                                        <span className='bg-blue-50 p-1 rounded'>#{order.id}</span>
+                                    </div>
                                 </td>
                                 <td className='px-6 py-4 whitespace-nowrap'>
-                                    <div className='text-sm text-gray-900'>{order.customer}</div>
-                                    <div className='text-sm text-gray-500'>{order.phone}</div>
+                                    <div className='text-sm text-gray-900'>{order.customer?.name}</div>
+                                    <div className='text-sm text-gray-500'>{order.customer?.phone}</div>
                                 </td>
-                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{order.date}</td>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+                                    {formatDate(order.deliveryDate)}
+                                </td>
                                 <td className='px-6 py-4 whitespace-nowrap'>
                                     <span
-                                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.statusColor}`}
+                                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColors(
+                                            order.status
+                                        )}`}
                                     >
-                                        {order.status}
+                                        {mapingOrderStatus(order.status)}
                                     </span>
                                 </td>
-                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{order.admin}</td>
+                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+                                    {order.auth?.fullName}
+                                </td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-medium'>
-                                    {order.amount}
+                                    {formatCurrency(order.totalAmount)}
                                 </td>
                                 <td className='px-6 py-4 whitespace-nowrap text-center text-sm font-medium'>
                                     <div className='flex items-center justify-center space-x-2'>
-                                        <button className='text-blue-600 hover:text-blue-900' title='Xem chi tiết'>
+                                        <button
+                                            className='text-blue-600 hover:text-blue-900 cursor-pointer'
+                                            title='Xem chi tiết'
+                                            onClick={() => router.push(`/orders/${order.id}`)}
+                                        >
                                             <span>Xem</span>
                                         </button>
-                                        <button className='text-green-600 hover:text-green-900' title='Chỉnh sửa'>
+                                        <button
+                                            className='text-green-600 hover:text-green-900 cursor-pointer'
+                                            title='Chỉnh sửa'
+                                            onClick={() => {
+                                                setActiveOrder(order);
+                                                setIsOpen(true);
+                                            }}
+                                        >
                                             <span>Sửa</span>
                                         </button>
-                                        <button className='text-purple-600 hover:text-purple-900' title='Nhân bản'>
-                                            <span>Nhân bản</span>
-                                        </button>
-                                        <button className='text-red-600 hover:text-red-900' title='Xóa'>
+                                        <button
+                                            className='text-red-600 hover:text-red-900 cursor-pointer'
+                                            title='Xóa'
+                                            onClick={() => {
+                                                setActiveOrder(order);
+                                                setIsShowDelete(true);
+                                            }}
+                                        >
                                             <span>Xóa</span>
                                         </button>
                                     </div>
@@ -126,6 +151,26 @@ export default function OrdersTable() {
                     <button className='px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50'>Sau</button>
                 </div>
             </div>
+            {isOpen && (
+                <CreateOrderModal
+                    isOpen={isOpen}
+                    isUpdate={true}
+                    orderInfo={activeOrder}
+                    onClose={() => setIsOpen(false)}
+                />
+            )}
+            {isShowDelete && (
+                <DeleteModal
+                    isOpen={isShowDelete}
+                    onClose={() => setIsShowDelete(false)}
+                    onDelete={() => {
+                        if (activeOrder) {
+                            deleteOrder(activeOrder.id);
+                        }
+                        setIsShowDelete(false);
+                    }}
+                />
+            )}
         </div>
     );
 }

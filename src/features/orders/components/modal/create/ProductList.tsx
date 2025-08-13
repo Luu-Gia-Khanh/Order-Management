@@ -5,12 +5,17 @@ import ChooseProductModal from './product/ChooseProductModal';
 import { formatCurrency } from '@/utils/currency.util';
 import { BiSolidTrashAlt } from 'react-icons/bi';
 import { ProductOrder } from '@/features/products/types/ProductOrder';
+import { useOrderItemManager } from '@/features/order-item/hook/useOrderItemManager';
+import { FaCartPlus } from 'react-icons/fa';
 
 type ProductListProps = {
+    orderId: string | null;
+    isUpdate: boolean;
     products: ProductOrder[];
     setProducts: React.Dispatch<React.SetStateAction<ProductOrder[]>>;
 };
-const ProductList = ({ products, setProducts }: ProductListProps) => {
+const ProductList = ({ isUpdate, orderId, products, setProducts }: ProductListProps) => {
+    const { deleteOrderItem, getOrderItemByOrderIdAndProductId } = useOrderItemManager();
     const [isOpen, setOpen] = useState(false);
     const updateProduct = (id: string, field: keyof ProductOrder, value: number) => {
         setProducts((prevProducts) =>
@@ -54,9 +59,9 @@ const ProductList = ({ products, setProducts }: ProductListProps) => {
                 </div>
                 <button
                     onClick={() => setOpen(true)}
-                    className='btn-primary text-white px-4 py-2 rounded-lg font-medium'
+                    className='btn-primary text-white px-4 py-2 rounded-lg font-medium flex items-center transition-colors hover:bg-blue-700'
                 >
-                    <i className='fas fa-plus mr-2'></i>Thêm sản phẩm
+                    <FaCartPlus className='mr-2'></FaCartPlus>Thêm sản phẩm
                 </button>
             </div>
             <div className='overflow-x-auto'>
@@ -111,7 +116,16 @@ const ProductList = ({ products, setProducts }: ProductListProps) => {
                                     </td>
                                     <td className='py-3'>
                                         <button
-                                            onClick={() => removeProduct(product.id)}
+                                            onClick={() => {
+                                                removeProduct(product.id);
+                                                if (isUpdate) {
+                                                    const orderItem = getOrderItemByOrderIdAndProductId(
+                                                        orderId ?? '',
+                                                        product.id
+                                                    );
+                                                    deleteOrderItem(orderItem?.id ?? '');
+                                                }
+                                            }}
                                             className='text-red-500 hover:text-red-700 cursor-pointer  flex justify-center items-center'
                                         >
                                             <BiSolidTrashAlt className='fas fa-trash text-sm'></BiSolidTrashAlt>
