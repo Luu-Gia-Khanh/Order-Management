@@ -1,6 +1,7 @@
 import { StateCreator } from 'zustand';
 import { Order } from '@/features/orders/types/Order';
 import { orderRepository } from '@/features/orders/repository/other.repository';
+import { PaymentStatus } from '@/features/orders/types/TotalPayment';
 
 export interface OrderState {
     order: {
@@ -20,6 +21,7 @@ export interface OrderState {
         note: string,
         authId: string
     ) => Promise<void>;
+    updateOrderPaymentStatus: (orderId: string, status: PaymentStatus) => Promise<Order | null>;
 }
 
 export const createOrderSlice: StateCreator<OrderState> = (set, get) => ({
@@ -112,6 +114,30 @@ export const createOrderSlice: StateCreator<OrderState> = (set, get) => ({
             }));
         } catch (error) {
             set((state) => ({ order: { ...state.order, loading: false, error: (error as Error).message } }));
+        }
+    },
+    updateOrderPaymentStatus: async (orderId: string, status: PaymentStatus) => {
+        set((state) => ({ order: { ...state.order, loading: true, error: null } }));
+        try {
+            const updatedOrder = await orderRepository.updateOrderPaymentStatus(orderId, status);
+            if (!updatedOrder) {
+                throw new Error('Failed to update order payment status');
+            }
+            const orders = get().order.orders.map((o) =>
+                o.id === updatedOrder.id ? { ...o, paymentStatus: updatedOrder.paymentStatus } : o
+            );
+            set((state) => ({
+                order: {
+                    ...state.order,
+                    orders: orders,
+                    loading: false,
+                    error: null,
+                },
+            }));
+            return updatedOrder;
+        } catch (error) {
+            set((state) => ({ order: { ...state.order, loading: false, error: (error as Error).message } }));
+            return null;
         }
     },
 });

@@ -1,4 +1,4 @@
-import { TotalPayment } from '@/features/orders/types/TotalPayment';
+import { PaymentStatus, TotalPayment } from '@/features/orders/types/TotalPayment';
 import { formatCurrency } from '@/utils/currency.util';
 import React, { useMemo } from 'react';
 import { FaCalculator } from 'react-icons/fa6';
@@ -54,6 +54,35 @@ const PaymentSummary = ({ totalPayment, shippingFee, subTotal, setTotalPayment }
                     <label htmlFor='vatInvoice' className='text-gray-700 cursor-pointer'>
                         Xuất hóa đơn VAT
                     </label>
+                </div>
+                <div className='flex items-center'>
+                    <label htmlFor='vatInvoice' className='text-gray-700 cursor-pointer'>
+                        Trạng thái thanh toán:
+                    </label>
+                    <div className='flex ml-2 space-x-6'>
+                        <label className='flex items-center cursor-pointer'>
+                            <input
+                                type='radio'
+                                value={PaymentStatus.PAID}
+                                className='text-blue-600 mr-2'
+                                checked={totalPayment.paymentStatus === PaymentStatus.PAID}
+                                onChange={() => setTotalPayment({ ...totalPayment, paymentStatus: PaymentStatus.PAID })}
+                            />
+                            <span className='text-gray-700'>Đã thanh toán</span>
+                        </label>
+                        <label className='flex items-center cursor-pointer'>
+                            <input
+                                type='radio'
+                                value={PaymentStatus.UNPAID}
+                                className='text-blue-600 mr-2'
+                                checked={totalPayment.paymentStatus === PaymentStatus.UNPAID}
+                                onChange={() =>
+                                    setTotalPayment({ ...totalPayment, paymentStatus: PaymentStatus.UNPAID })
+                                }
+                            />
+                            <span className='text-gray-700'>Chưa thanh toán</span>
+                        </label>
+                    </div>
                 </div>
                 <div className='border-t border-gray-200 pt-4'>
                     <div className='flex justify-between items-center'>

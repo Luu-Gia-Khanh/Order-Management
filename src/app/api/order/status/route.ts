@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import { OrderStatusHistory } from '@/features/order-status-history/types/OrderStatusHistory';
 import { Order } from '@/features/orders/types/Order';
+import { OrderStatus } from '@/features/orders/types/AdditionalOrderInfo';
 
 const filePath = path.join(process.cwd(), 'public/data/orders.json');
 export async function GET() {
@@ -40,8 +41,8 @@ export async function PUT(req: Request) {
 
 async function addNewStatusHistory(
     orderId: string,
-    fromStatus: string | null,
-    toStatus: string,
+    fromStatus: OrderStatus | null,
+    toStatus: OrderStatus,
     authId: string,
     note: string
 ): Promise<OrderStatusHistory> {

@@ -10,6 +10,7 @@ import OrderDetailUpdateOrderStatus from '@/features/order-detail/components/Ord
 import React, { useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import { useOrderManager } from '@/features/orders/hook/useOrderManager';
+import OrderDetailPaymentInfo from '@/features/order-detail/components/OrderDetailPaymentInfo';
 
 const OrderDetail = () => {
     const params = useParams();
@@ -44,6 +45,9 @@ const OrderDetail = () => {
 
                         {/* Tổng kết thanh toán */}
                         <OrderDetailSumaryPayment orderFullInfor={orderFullInfor} />
+
+                        {/* Thông tin thanh toán */}
+                        <OrderDetailPaymentInfo orderFullInfor={orderFullInfor} />
                     </div>
 
                     {/* Sidebar */}

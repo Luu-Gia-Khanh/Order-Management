@@ -9,6 +9,7 @@ import { createOrderSlice, OrderState } from './other.slice';
 import { BankAccountState, createBankAccountSlice } from './bankAccount.slice';
 import { createOrderItemSlice, OrderItemState } from './orderItem.slice';
 import { createOrderStatusHistorySlice, OrderStatusHistoryState } from './orderStatusHistory.slice';
+import { createOrderPaymentSlice, OrderPaymentState } from './orderPayment.slice';
 
 type StoreState = AuthState &
     CustomerState &
@@ -18,7 +19,8 @@ type StoreState = AuthState &
     OrderState &
     BankAccountState &
     OrderItemState &
-    OrderStatusHistoryState;
+    OrderStatusHistoryState &
+    OrderPaymentState;
 
 export const useAppStore = create<StoreState>()(
     devtools(
@@ -33,6 +35,7 @@ export const useAppStore = create<StoreState>()(
                 ...createBankAccountSlice(...a),
                 ...createOrderItemSlice(...a),
                 ...createOrderStatusHistorySlice(...a),
+                ...createOrderPaymentSlice(...a),
             }),
             {
                 name: 'order-management-store',

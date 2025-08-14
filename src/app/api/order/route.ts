@@ -8,6 +8,8 @@ import { BankAccount } from '@/types/BankAccount';
 import { OrderStatus } from '@/features/orders/types/AdditionalOrderInfo';
 import { OrderItem } from '@/features/orders/types/Orderitem';
 import { OrderStatusHistory } from '@/features/order-status-history/types/OrderStatusHistory';
+import { PaymentStatus } from '@/features/orders/types/TotalPayment';
+import { OrderPayment } from '@/features/order-payment/types/OrderPayment';
 
 const filePath = path.join(process.cwd(), 'public/data/orders.json');
 
@@ -16,6 +18,36 @@ export async function GET() {
         const raw = fs.readFileSync(filePath, 'utf-8');
         const orders: Order[] = JSON.parse(raw);
         return Response.json(orders);
+    } catch {
+        return new Response(JSON.stringify({ message: 'Lỗi đọc file' }), { status: 500 });
+    }
+}
+
+export async function PUT(req: Request) {
+    try {
+        const raw = fs.readFileSync(filePath, 'utf-8');
+        const orders: Order[] = JSON.parse(raw);
+
+        const body = await req.json();
+        const orderId = body.orderId;
+        const paymentStatus = body.status;
+
+        const order = orders.find((order) => order.id === orderId);
+        if (order) {
+            order.paymentStatus = paymentStatus;
+            order.updatedAt = new Date();
+
+            // Update the order in the array
+            const index = orders.findIndex((o) => o.id === orderId);
+            if (index !== -1) {
+                orders[index] = order;
+            }
+
+            fs.writeFileSync(filePath, JSON.stringify(orders, null, 2), 'utf-8');
+            return Response.json({ message: 'Order updated', data: order }, { status: 200 });
+        } else {
+            return new Response(JSON.stringify({ message: 'Order not found' }), { status: 404 });
+        }
     } catch {
         return new Response(JSON.stringify({ message: 'Lỗi đọc file' }), { status: 500 });
     }
@@ -38,6 +70,7 @@ export async function POST(req: Request) {
         if (existingOrder) {
             const index = orders.findIndex((order) => order.id === existingOrder.id);
             if (index !== -1) {
+                newOrder.createdAt = existingOrder.createdAt;
                 orders[index] = newOrder;
             }
         } else {
@@ -48,6 +81,31 @@ export async function POST(req: Request) {
                 authId: newOrder.createdBy,
                 status: newOrder.status,
             });
+        }
+
+        // create payment
+        if (newOrder.paymentStatus === PaymentStatus.PAID) {
+            if (existingOrder) {
+                if (existingOrder?.paymentStatus === PaymentStatus.UNPAID) {
+                    addOrderPayment({
+                        orderId: newOrder.id,
+                        paymentAmount: newOrder.totalAmount,
+                        paymentMethod: newOrder.paymentMethodId,
+                        paymentDate: new Date(),
+                        note: '',
+                        createdBy: newOrder.createdBy,
+                    });
+                }
+            } else {
+                addOrderPayment({
+                    orderId: newOrder.id,
+                    paymentAmount: newOrder.totalAmount,
+                    paymentMethod: newOrder.paymentMethodId,
+                    paymentDate: new Date(),
+                    note: '',
+                    createdBy: newOrder.createdBy,
+                });
+            }
         }
 
         // create order items
@@ -107,6 +165,7 @@ async function handleGenerateOrderItem({
         } else {
             id = Date.now().toString();
         }
+
         // Update existing item
         const newItem: OrderItem = {
             id: id,
@@ -127,6 +186,7 @@ async function handleGenerateOrderItem({
         } else {
             orderItems.push(newItem);
         }
+
         fs.writeFileSync(filePath, JSON.stringify(orderItems, null, 2), 'utf-8');
         return newItem;
     } catch (error) {
@@ -213,6 +273,8 @@ async function handleGenerateOrder(body: any): Promise<Order | null> {
         // cancelledAt
         const cancelledAt = status === OrderStatus.CANCELLED ? new Date() : null;
 
+        const paymentStatus = body.totalPayment.paymentStatus || PaymentStatus.UNPAID;
+
         console.log('payment', payment);
 
         const newOrder: Order = {
@@ -238,6 +300,7 @@ async function handleGenerateOrder(body: any): Promise<Order | null> {
             confirmedAt,
             deliveredAt,
             cancelledAt,
+            paymentStatus,
         };
 
         return newOrder;
@@ -337,6 +400,48 @@ async function addCustomer({
     } catch {
         console.log('ERROR ADD CUSTOMER');
 
+        return null;
+    }
+}
+
+export async function addOrderPayment({
+    orderId,
+    paymentAmount,
+    paymentMethod,
+    paymentDate,
+    note,
+    createdBy,
+}: {
+    orderId: string;
+    paymentAmount: number;
+    paymentMethod: string;
+    paymentDate: Date;
+    note?: string;
+    createdBy: string;
+}): Promise<OrderPayment | null> {
+    try {
+        const filePath = path.join(process.cwd(), 'public/data/order_payments.json');
+        const raw = fs.readFileSync(filePath, 'utf-8');
+        const orderPayments: OrderPayment[] = JSON.parse(raw);
+
+        const newOrderPayment: OrderPayment = {
+            id: Date.now().toString(),
+            orderId: orderId,
+            paymentAmount: paymentAmount,
+            paymentMethod: paymentMethod,
+            paymentDate: paymentDate,
+            note: note,
+            createdBy: createdBy,
+            createdAt: new Date(),
+        };
+
+        orderPayments.push(newOrderPayment);
+
+        fs.writeFileSync(filePath, JSON.stringify(orderPayments, null, 2), 'utf-8');
+
+        return newOrderPayment;
+    } catch {
+        console.log('ERROR ADD CUSTOMER');
         return null;
     }
 }

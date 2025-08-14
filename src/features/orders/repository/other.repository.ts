@@ -1,5 +1,6 @@
 import { Order } from '../types/Order';
 import { OrderItem } from '../types/Orderitem';
+import { PaymentStatus } from '../types/TotalPayment';
 
 export const orderRepository = {
     async fetchAllOrders(): Promise<Order[]> {
@@ -45,6 +46,22 @@ export const orderRepository = {
         } catch (error) {
             console.error('Error deleting order:', error);
             throw new Error((error as Error).message || 'Failed to delete order');
+        }
+    },
+
+    async updateOrderPaymentStatus(orderId: string, status: PaymentStatus): Promise<Order | null> {
+        try {
+            const response = await fetch(`/api/order`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ orderId, status }),
+            }).then((res) => res.json());
+            return response;
+        } catch (error) {
+            console.error('Error updating order payment status:', error);
+            throw new Error((error as Error).message || 'Failed to update order payment status');
         }
     },
 

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1755141582855",
+    "orderId": "ORD-250814-HNZXEE",
+    "paymentAmount": 33015000,
+    "paymentMethod": "pm_001",
+    "paymentDate": "2025-08-14T03:19:42.854Z",
+    "note": "",
+    "createdBy": "admin002",
+    "createdAt": "2025-08-14T03:19:42.855Z"
+  },
+  {
+    "id": "1755144146420",
+    "orderId": "ORD-250814-Q8774J",
+    "paymentAmount": 38002000,
+    "paymentMethod": "pm_002",
+    "paymentDate": "2025-08-14T04:02:26.419Z",
+    "note": "",
+    "createdBy": "admin002",
+    "createdAt": "2025-08-14T04:02:26.420Z"
+  },
+  {
+    "id": "1755168473156",
+    "orderId": "ORD-250814-BYW42N",
+    "paymentAmount": 10000000,
+    "paymentMethod": "CASH",
+    "paymentDate": "2025-08-14T10:47:29.296Z",
+    "note": "trả 10 triệu trước",
+    "createdBy": "admin002",
+    "createdAt": "2025-08-14T10:47:53.156Z"
+  },
+  {
+    "id": "1755169517443",
+    "orderId": "ORD-250814-BYW42N",
+    "paymentAmount": 23015000,
+    "paymentMethod": "BANK_TRANSFER",
+    "paymentDate": "2025-08-14T11:04:55.384Z",
+    "note": "DONE hết nợ",
+    "createdBy": "admin002",
+    "createdAt": "2025-08-14T11:05:17.444Z"
+  },
+  {
+    "id": "1755171445883",
+    "orderId": "ORD-250814-TU90ZV",
+    "paymentAmount": 2501504,
+    "paymentMethod": "CASH",
+    "paymentDate": "2025-08-14T11:36:20.622Z",
+    "note": "OKE NÈ",
+    "createdBy": "admin002",
+    "createdAt": "2025-08-14T11:37:25.883Z"
+  },
+  {
+    "id": "1755171461002",
+    "orderId": "ORD-250814-TU90ZV",
+    "paymentAmount": 22513496,
+    "paymentMethod": "CASH",
+    "paymentDate": "2025-08-14T11:37:33.993Z",
+    "note": "DONE",
+    "createdBy": "admin002",
+    "createdAt": "2025-08-14T11:37:41.003Z"
+  }
+]

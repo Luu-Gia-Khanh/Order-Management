@@ -1,10 +1,21 @@
 import { OrderFullInfo } from '@/features/orders/types/Order';
+import { PaymentStatus } from '@/features/orders/types/TotalPayment';
 import { formatDate } from '@/utils/date.util';
-import { mapingOrderStatus, statusColors } from '@/utils/status.util';
-import React from 'react';
+import { mapingOrderPaymentStatus, mapingOrderStatus, statusColors } from '@/utils/status.util';
+import React, { useMemo } from 'react';
 import { FaReceipt } from 'react-icons/fa';
 
 export default function OrderDetailInforOrder({ orderFullInfor }: { orderFullInfor: OrderFullInfo | null }) {
+    const inforPaymentStatus = useMemo(() => {
+        if (!orderFullInfor) return null;
+        if (!orderFullInfor.paymentStatus) return null;
+        const isPaid = orderFullInfor.paymentStatus === PaymentStatus.PAID;
+        return (
+            <span className={`font-semibold  ${isPaid ? 'text-green-600' : 'text-yellow-600'}`}>
+                {mapingOrderPaymentStatus(orderFullInfor?.paymentStatus)}
+            </span>
+        );
+    }, [orderFullInfor]);
     return (
         <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-200'>
             <div className='flex items-center justify-between mb-6'>
@@ -51,7 +62,7 @@ export default function OrderDetailInforOrder({ orderFullInfor }: { orderFullInf
                     </div>
                     <div className='flex justify-between'>
                         <span className='text-gray-600'>Trạng thái thanh toán:</span>
-                        <span className='font-semibold text-yellow-600'>Chưa thanh toán</span>
+                        {inforPaymentStatus}
                     </div>
                     <div className='flex justify-between'>
                         <span className='text-gray-600'>Nhân viên tạo:</span>

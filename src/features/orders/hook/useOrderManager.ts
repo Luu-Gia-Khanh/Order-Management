@@ -8,6 +8,7 @@ export function useOrderManager() {
     const fetchOrders = useAppStore((state) => state.fetchOrders);
     const deleteOrder = useAppStore((state) => state.deleteOrder);
     const updateOrderStatus = useAppStore((state) => state.updateOrderStatus);
+    const updateOrderPaymentStatus = useAppStore((state) => state.updateOrderPaymentStatus);
 
     const customers = useAppStore((state) => state.customer.customers);
     const shippings = useAppStore((state) => state.shipping.shippings);
@@ -24,7 +25,7 @@ export function useOrderManager() {
             const customer = customers.find((c) => c.id === order.customerId);
             const shippingUnit = shippings.find((s) => s.id === order.shippingUnitId);
             const paymentMethod = payments.find((p) => p.id === order.paymentMethodId);
-            const bankAccount = bankAccounts.find((b) => b.id === order.bankAccountId);
+            const bankAccount = bankAccounts?.find((b) => b.id === order.bankAccountId);
             const orderItemsByOrder = orderItems
                 ?.filter((item) => item.orderId === order.id)
                 .map((item) => {
@@ -65,5 +66,6 @@ export function useOrderManager() {
         deleteOrder,
         ordersFullInfoById,
         updateOrderStatus,
+        updateOrderPaymentStatus,
     };
 }

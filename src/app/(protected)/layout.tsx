@@ -5,6 +5,7 @@ import { useAuthManager } from '@/features/auth/hook/useAuthManager';
 import { useBankAccountManager } from '@/features/bank-account/hook/useBankAccountManager';
 import { useCustomerManager } from '@/features/customers/hook/useCustomerManager';
 import { useOrderItemManager } from '@/features/order-item/hook/useOrderItemManager';
+import { useOrderPaymentManager } from '@/features/order-payment/hook/useOrderPaymentManager';
 import { useOrderStatusHistoryManager } from '@/features/order-status-history/hook/useOrderStatusHistoryManager';
 import { useOrderManager } from '@/features/orders/hook/useOrderManager';
 import { useProductManager } from '@/features/products/hook/useProductManager';
@@ -22,6 +23,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
     const { fetchBankAccounts } = useBankAccountManager();
     const { fetchOrderItems } = useOrderItemManager();
     const { fetchAllOrderStatusHistory } = useOrderStatusHistoryManager();
+    const { fetchAllOrderPayment } = useOrderPaymentManager();
 
     const router = useRouter();
     const { token, hydrated, loginWithToken, fetchAuths } = useAuthManager();
@@ -42,6 +44,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
             fetchOrderItems();
             fetchAuths();
             fetchAllOrderStatusHistory();
+            fetchAllOrderPayment();
             setChecking(false);
         }
     }, [
@@ -58,6 +61,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
         fetchOrderItems,
         fetchAuths,
         fetchAllOrderStatusHistory,
+        fetchAllOrderPayment,
     ]);
 
     if (checking) {

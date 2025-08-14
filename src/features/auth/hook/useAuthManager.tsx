@@ -4,6 +4,7 @@ export function useAuthManager() {
     const token = useAppStore((state) => state.token);
     const error = useAppStore((state) => state.error);
     const auth = useAppStore((state) => state.auth);
+    const auths = useAppStore((state) => state.auths);
 
     const hydrated = useAppStore((state) => state.hydrated);
 
@@ -18,6 +19,7 @@ export function useAuthManager() {
     const fetchAuths = useAppStore((state) => state.fetchAuths);
 
     return {
+        auths,
         token,
         auth,
         hydrated,

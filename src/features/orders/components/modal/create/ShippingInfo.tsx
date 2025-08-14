@@ -51,8 +51,23 @@ const ShippingInfo = ({ deliveryInfo, setDeliveryInfo }: ShippingInfoProps) => {
     }, [deliveryInfo?.deliveryDate]);
 
     useEffect(() => {
-        console.log('deliveryInfo changed:', deliveryInfo);
-    }, [deliveryInfo]);
+        if (deliveryInfo && !deliveryInfo.shippingUnitId) {
+            setDeliveryInfo((prev) => {
+                if (!prev) {
+                    return {
+                        deliveryDate: null,
+                        deliveredAt: null,
+                        cancelledAt: null,
+                        shippingUnitId: null,
+                    };
+                }
+                return {
+                    ...prev,
+                    shippingUnitId: shippings.length > 0 ? shippings[0].id : null,
+                };
+            });
+        }
+    }, [deliveryInfo, setDeliveryInfo, shippings]);
 
     return (
         <div className='section-card p-6'>

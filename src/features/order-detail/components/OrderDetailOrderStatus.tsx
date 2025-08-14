@@ -4,7 +4,7 @@ import { OrderFullInfo } from '@/features/orders/types/Order';
 import { formatDate } from '@/utils/date.util';
 import { mapingOrderStatus } from '@/utils/status.util';
 import React, { useMemo } from 'react';
-import { FaCheck, FaCircle, FaClock, FaTruck } from 'react-icons/fa';
+import { FaCheck, FaClock, FaTruck } from 'react-icons/fa';
 
 export default function OrderDetailOrderStatus({ orderFullInfor }: { orderFullInfor: OrderFullInfo | null }) {
     const { orderStatusHistories } = useOrderStatusHistoryManager();

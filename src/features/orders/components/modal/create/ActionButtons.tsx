@@ -4,11 +4,12 @@ import { FaCheck } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 
 type ActionButtonsProps = {
+    isUpdate: boolean;
     isValid: boolean;
     onCreate: () => void;
     onCancel: () => void;
 };
-const ActionButtons = ({ isValid, onCreate, onCancel }: ActionButtonsProps) => {
+const ActionButtons = ({ isUpdate, isValid, onCreate, onCancel }: ActionButtonsProps) => {
     const cancelOrder = () => {
         if (confirm('Bạn có chắc chắn muốn hủy tạo đơn hàng?')) {
             onCancel();
@@ -23,7 +24,7 @@ const ActionButtons = ({ isValid, onCreate, onCancel }: ActionButtonsProps) => {
                 className='flex justify-center items-center btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg'
             >
                 <FaCheck className='fas fa-check mr-2' />
-                TẠO ĐƠN HÀNG
+                {isUpdate ? 'CẬP NHẬT ĐƠN HÀNG' : 'TẠO ĐƠN HÀNG'}
             </Button>
             <Button
                 variant='secondary'

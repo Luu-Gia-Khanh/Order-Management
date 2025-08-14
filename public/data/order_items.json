@@ -1,35 +1,57 @@
 [
   {
-    "id": "1755076758106",
-    "orderId": "ORD-250813-UL0XJ7",
+    "id": "1755141582856",
+    "orderId": "ORD-250814-HNZXEE",
+    "productId": "1",
+    "productName": "Laptop Dell XPS 13",
+    "price": 32990000,
+    "quantity": 1,
+    "subtotal": 32990000,
+    "note": "",
+    "createdAt": "2025-08-14T03:19:42.856Z"
+  },
+  {
+    "id": "1755144146423",
+    "orderId": "ORD-250814-Q8774J",
+    "productId": "6",
+    "productName": "Màn hình LG UltraFine 5K",
+    "price": 18990000,
+    "quantity": 2,
+    "subtotal": 37980000,
+    "note": "",
+    "createdAt": "2025-08-14T04:03:04.439Z"
+  },
+  {
+    "id": "1755144184442",
+    "orderId": "ORD-250814-Q8774J",
     "productId": "2",
     "productName": "iPhone 15 Pro Max",
     "price": 34990000,
     "quantity": 1,
     "subtotal": 34990000,
     "note": "",
-    "createdAt": "2025-08-13T10:47:09.021Z"
+    "createdAt": "2025-08-14T04:03:04.442Z"
   },
   {
-    "id": "1755093203614",
-    "orderId": "ORD-250813-DDZ7OI",
+    "id": "1755157511591",
+    "orderId": "ORD-250814-BYW42N",
     "productId": "1",
     "productName": "Laptop Dell XPS 13",
     "price": 32990000,
     "quantity": 1,
     "subtotal": 32990000,
     "note": "",
-    "createdAt": "2025-08-13T13:53:23.614Z"
+    "createdAt": "2025-08-14T07:45:11.591Z"
   },
   {
-    "id": "1755102264439",
-    "orderId": "ORD-250813-EAXJEH",
-    "productId": "1",
-    "productName": "Laptop Dell XPS 13",
-    "price": 32990000,
+    "id": "1755171153070",
+    "orderId": "ORD-250814-TU90ZV",
+    "productId": "2",
+    "productName": "iPhone 15 Pro Max",
+    "price": 34990000,
     "quantity": 1,
-    "subtotal": 32990000,
+    "subtotal": 34990000,
     "note": "",
-    "createdAt": "2025-08-13T16:24:24.439Z"
+    "createdAt": "2025-08-14T11:32:33.070Z"
   }
 ]

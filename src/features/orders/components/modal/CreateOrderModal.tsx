@@ -13,7 +13,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ProductOrder } from '@/features/products/types/ProductOrder';
 import { DeliveryOrderInformation } from '../../types/DeliveryOrderInformation';
 import { PaymentOrderInfo } from '@/features/payment/types/PaymentOrderInfo';
-import { TotalPayment } from '../../types/TotalPayment';
+import { PaymentStatus, TotalPayment } from '../../types/TotalPayment';
 import { useShippingManager } from '@/features/shipping/hook/useShippingManager';
 import { AdditionalOrderInfo, OrderStatus } from '../../types/AdditionalOrderInfo';
 import { useOrderManager } from '../../hook/useOrderManager';
@@ -21,6 +21,7 @@ import { useAuthManager } from '@/features/auth/hook/useAuthManager';
 import { OrderFullInfo } from '../../types/Order';
 import { useOrderItemManager } from '@/features/order-item/hook/useOrderItemManager';
 import { useOrderStatusHistoryManager } from '@/features/order-status-history/hook/useOrderStatusHistoryManager';
+import { useOrderPaymentManager } from '@/features/order-payment/hook/useOrderPaymentManager';
 
 type CreateOrderModalProps = {
     isOpen: boolean;
@@ -34,6 +35,7 @@ export default function CreateOrderModal({ isOpen, isUpdate, orderInfo, onClose 
     const { auth } = useAuthManager();
     const { fetchOrderItems } = useOrderItemManager();
     const { fetchAllOrderStatusHistory } = useOrderStatusHistoryManager();
+    const { fetchAllOrderPayment } = useOrderPaymentManager();
 
     // customer information
     const [customerInfo, setCustomerInfo] = useState<Customer | null>(null);
@@ -54,6 +56,7 @@ export default function CreateOrderModal({ isOpen, isUpdate, orderInfo, onClose 
     const [totalPayment, setTotalPayment] = useState<TotalPayment>({
         prepayAmount: 0,
         vatInvoice: false,
+        paymentStatus: PaymentStatus.UNPAID,
     });
 
     const [additionalInfo, setAdditionalInfo] = useState<AdditionalOrderInfo>({
@@ -129,6 +132,7 @@ export default function CreateOrderModal({ isOpen, isUpdate, orderInfo, onClose 
             setTotalPayment({
                 prepayAmount: orderInfo.prepaidAmount,
                 vatInvoice: orderInfo.vatInvoice,
+                paymentStatus: orderInfo.paymentStatus,
             });
             setAdditionalInfo({
                 orderStatus: orderInfo.status,
@@ -183,6 +187,7 @@ export default function CreateOrderModal({ isOpen, isUpdate, orderInfo, onClose 
                             </div>
                         </div>
                         <ActionButtons
+                            isUpdate={isUpdate}
                             isValid={isValid}
                             onCreate={() => {
                                 createOrder({
@@ -202,6 +207,7 @@ export default function CreateOrderModal({ isOpen, isUpdate, orderInfo, onClose 
                                         alert('Đơn hàng đã được tạo thành công!');
                                         fetchOrderItems();
                                         fetchAllOrderStatusHistory();
+                                        fetchAllOrderPayment();
                                         onClose();
                                     })
                                     .catch((error) => {

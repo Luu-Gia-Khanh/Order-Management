@@ -1,4 +1,5 @@
 import { OrderStatus } from '@/features/orders/types/AdditionalOrderInfo';
+import { PaymentStatus } from '@/features/orders/types/TotalPayment';
 
 export const statusColors = (status: OrderStatus) => {
     switch (status) {
@@ -34,6 +35,17 @@ export const mapingOrderStatus = (status: OrderStatus) => {
         case OrderStatus.CANCELLED:
             return 'Đã hủy';
 
+        default:
+            return 'Không xác định';
+    }
+};
+
+export const mapingOrderPaymentStatus = (status: PaymentStatus) => {
+    switch (status) {
+        case PaymentStatus.PAID:
+            return 'Đã thanh toán';
+        case PaymentStatus.UNPAID:
+            return 'Chưa thanh toán';
         default:
             return 'Không xác định';
     }

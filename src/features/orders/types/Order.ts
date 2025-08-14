@@ -5,6 +5,7 @@ import { OrderStatus } from './AdditionalOrderInfo';
 import { BankAccount } from '@/types/BankAccount';
 import { OrderItem } from './Orderitem';
 import { Auth } from '@/features/auth/types/Auth';
+import { PaymentStatus } from './TotalPayment';
 
 export interface Order {
     id: string;
@@ -22,6 +23,7 @@ export interface Order {
     vatInvoice: boolean;
     note: string;
     status: OrderStatus;
+    paymentStatus: PaymentStatus;
     subtotal: number;
     totalAmount: number;
     createdAt: Date;
