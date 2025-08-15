@@ -29,14 +29,7 @@ export default function OrdersTable() {
             <div className='p-6 border-b border-gray-100'>
                 <div className='flex items-center justify-between'>
                     <h3 className='text-lg font-semibold text-gray-800'>Danh sách đơn hàng</h3>
-                    <div className='flex items-center space-x-2'>
-                        {/* <button className='text-gray-600 hover:text-gray-800 px-3 py-1 rounded text-sm'>
-                            <span>Xuất Excel</span>
-                        </button>
-                        <button className='text-red-600 hover:text-red-700 px-3 py-1 rounded text-sm'>
-                            <span>Xóa đã chọn</span>
-                        </button> */}
-                    </div>
+                    <div className='flex items-center space-x-2'></div>
                 </div>
             </div>
             <div className='overflow-x-auto'>
@@ -53,14 +46,14 @@ export default function OrdersTable() {
                                 Khách hàng
                             </th>
                             <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                                Ngày giao
+                                Ngày tạo
                             </th>
                             <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                                 Trạng thái
                             </th>
-                            <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                            {/* <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                                 Admin tạo
-                            </th>
+                            </th> */}
                             <th className='px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider'>
                                 Tổng tiền
                             </th>
@@ -85,7 +78,7 @@ export default function OrdersTable() {
                                     <div className='text-sm text-gray-500'>{order.customer?.phone}</div>
                                 </td>
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
-                                    {formatDate(order.deliveryDate)}
+                                    {formatDate(order.createdAt, 'dd/MM/yyyy HH:mm')}
                                 </td>
                                 <td className='px-6 py-4 whitespace-nowrap'>
                                     <span
@@ -96,9 +89,9 @@ export default function OrdersTable() {
                                         {mapingOrderStatus(order.status)}
                                     </span>
                                 </td>
-                                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+                                {/* <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
                                     {order.auth?.fullName}
-                                </td>
+                                </td> */}
                                 <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-medium'>
                                     {formatCurrency(order.totalAmount)}
                                 </td>
@@ -138,7 +131,7 @@ export default function OrdersTable() {
                     </tbody>
                 </table>
             </div>
-            <div className='px-6 py-3 border-t border-gray-200 flex items-center justify-between'>
+            {/* <div className='px-6 py-3 border-t border-gray-200 flex items-center justify-between'>
                 <div className='text-sm text-gray-700'>
                     Hiển thị <span className='font-medium'>1</span> đến <span className='font-medium'>10</span> của{' '}
                     <span className='font-medium'>97</span> kết quả
@@ -150,7 +143,7 @@ export default function OrdersTable() {
                     <button className='px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50'>3</button>
                     <button className='px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50'>Sau</button>
                 </div>
-            </div>
+            </div> */}
             {isOpen && (
                 <CreateOrderModal
                     isOpen={isOpen}

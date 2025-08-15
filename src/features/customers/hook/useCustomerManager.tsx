@@ -1,5 +1,5 @@
 import { useAppStore } from '@/stores';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Customer } from '../types/Customer';
 
 export function useCustomerManager() {
@@ -24,10 +24,23 @@ export function useCustomerManager() {
         [createCustomer]
     );
 
+    const customerToday = useMemo(() => {
+        return customers.filter((customer) => {
+            const createdAt = new Date(customer.createdAt);
+            const today = new Date();
+            return (
+                createdAt.getDate() === today.getDate() &&
+                createdAt.getMonth() === today.getMonth() &&
+                createdAt.getFullYear() === today.getFullYear()
+            );
+        });
+    }, [customers]);
+
     return {
         loading,
         error,
         customers,
+        customerToday,
 
         fetchCustomers,
         handleCreateCustomer,

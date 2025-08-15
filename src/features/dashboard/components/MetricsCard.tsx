@@ -39,6 +39,10 @@ const trendMap = {
         icon: '⚠️',
         color: 'text-yellow-600',
     },
+    neutral: {
+        icon: '→',
+        color: 'text-blue-600',
+    },
 };
 
 type MetricsCardProps = {

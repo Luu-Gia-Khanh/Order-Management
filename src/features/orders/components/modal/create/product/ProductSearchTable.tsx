@@ -1,6 +1,7 @@
 'use client';
 
 import { Product } from '@/features/products/types/Product';
+import { formatDate } from '@/utils/date.util';
 import { useMemo } from 'react';
 
 type ProductSearchTableProps = {
@@ -110,7 +111,7 @@ export default function ProductSearchTable({ searchValue, products, onSelectProd
                                                 className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'
                                             >
                                                 {value instanceof Date
-                                                    ? value.toLocaleDateString() // hoặc toISOString(), format bạn muốn
+                                                    ? formatDate(value) // hoặc toISOString(), format bạn muốn
                                                     : value || ''}
                                             </td>
                                         );

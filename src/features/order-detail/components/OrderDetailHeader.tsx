@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaArrowLeft, FaEdit, FaPrint, FaTimes } from 'react-icons/fa';
+import { FaArrowLeft, FaPrint } from 'react-icons/fa';
 
 export default function OrderDetailHeader() {
     return (
@@ -23,7 +23,7 @@ export default function OrderDetailHeader() {
                 >
                     <FaPrint className='mr-2 inline' /> In đơn hàng
                 </button>
-                <button
+                {/* <button
                     onClick={() => {}}
                     className='bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium transition-colors hover:translate-y-[-1px]'
                 >
@@ -34,7 +34,7 @@ export default function OrderDetailHeader() {
                     className='bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded-lg font-medium hover:translate-y-[-1px] hover:shadow-lg transition-all'
                 >
                     <FaTimes className='mr-2 inline' /> Hủy đơn
-                </button>
+                </button> */}
             </div>
         </div>
     );

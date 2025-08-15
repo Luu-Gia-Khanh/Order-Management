@@ -1,3 +1,4 @@
+import Button from '@/components/ui/Button';
 import OrderStatusSelect from '@/components/ui/status/OrderStatusSelect';
 import { useAuthManager } from '@/features/auth/hook/useAuthManager';
 import { useOrderStatusHistoryManager } from '@/features/order-status-history/hook/useOrderStatusHistoryManager';
@@ -33,7 +34,7 @@ export default function OrderDetailUpdateOrderStatus({ orderFullInfor }: { order
                     className='w-full p-3 border border-gray-300 rounded-lg h-20 resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
                     onChange={(e) => setNote(e.target.value)}
                 ></textarea>
-                <button
+                <Button
                     onClick={() => {
                         updateOrderStatus(
                             orderFullInfor?.id ?? '',
@@ -49,7 +50,7 @@ export default function OrderDetailUpdateOrderStatus({ orderFullInfor }: { order
                 >
                     <FaSave className='mr-2 inline' />
                     Cập nhật trạng thái
-                </button>
+                </Button>
             </div>
         </div>
     );

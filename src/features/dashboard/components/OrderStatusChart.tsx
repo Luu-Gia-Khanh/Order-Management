@@ -1,9 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import Chart from 'chart.js/auto';
+import { OrderStatus } from '@/features/orders/types/AdditionalOrderInfo';
+import { useOrderManager } from '@/features/orders/hook/useOrderManager';
 
 export default function OrderStatusChart() {
+    const { orders } = useOrderManager();
     const chartRef = useRef<HTMLCanvasElement>(null);
     const chartInstanceRef = useRef<Chart | null>(null);
+
+    const orderStatus = useMemo(() => {
+        return ['Chờ xử lý', 'Đã xác nhận', 'Đang chuẩn bị', 'Đang giao hàng', 'Đã giao hàng', 'Đã hủy'];
+    }, []);
 
     useEffect(() => {
         if (chartRef.current) {
@@ -13,15 +20,35 @@ export default function OrderStatusChart() {
             if (chartInstanceRef.current) {
                 chartInstanceRef.current.destroy();
             }
+            const counts = {
+                [OrderStatus.PENDING]: 0,
+                [OrderStatus.CONFIRMED]: 0,
+                [OrderStatus.REPAIRED]: 0,
+                [OrderStatus.SHIPPING]: 0,
+                [OrderStatus.DELIVERED]: 0,
+                [OrderStatus.CANCELLED]: 0,
+            };
 
+            orders.forEach((order) => {
+                counts[order.status]++;
+            });
+
+            const orderStatusData = [
+                counts[OrderStatus.PENDING],
+                counts[OrderStatus.CONFIRMED],
+                counts[OrderStatus.REPAIRED],
+                counts[OrderStatus.SHIPPING],
+                counts[OrderStatus.DELIVERED],
+                counts[OrderStatus.CANCELLED],
+            ];
             chartInstanceRef.current = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Hoàn thành', 'Đang xử lý', 'Đang giao', 'Chờ xử lý', 'Đã hủy'],
+                    labels: orderStatus,
                     datasets: [
                         {
-                            data: [45, 20, 15, 12, 8],
-                            backgroundColor: ['#10B981', '#F59E0B', '#3B82F6', '#EF4444', '#6B7280'],
+                            data: orderStatusData,
+                            backgroundColor: ['#10B981', '#F59E0B', '#3B82F6', '#EF4444', '#6B7280', '#8B5CF6'],
                             borderWidth: 0,
                         },
                     ],
@@ -45,7 +72,7 @@ export default function OrderStatusChart() {
         return () => {
             chartInstanceRef.current?.destroy();
         };
-    }, []);
+    }, [orderStatus, orders]);
 
     return (
         <div>

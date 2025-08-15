@@ -1,6 +1,7 @@
 import { useAppStore } from '@/stores';
 import { useCallback, useMemo } from 'react';
 import { OrderFullInfo } from '../types/Order';
+import { OrderStatus } from '../types/AdditionalOrderInfo';
 
 export function useOrderManager() {
     const order = useAppStore((state) => state.order);
@@ -56,11 +57,71 @@ export function useOrderManager() {
         [ordersFullInfo]
     );
 
+    const ordersToday = useMemo(() => {
+        const today = new Date();
+        return orders.filter((order) => {
+            const orderDate = new Date(order.createdAt);
+            return (
+                orderDate.getDate() === today.getDate() &&
+                orderDate.getMonth() === today.getMonth() &&
+                orderDate.getFullYear() === today.getFullYear()
+            );
+        });
+    }, [orders]);
+
+    const orderYesterday = useMemo(() => {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        return orders.filter((order) => {
+            const orderDate = new Date(order.createdAt);
+            return (
+                orderDate.getDate() === yesterday.getDate() &&
+                orderDate.getMonth() === yesterday.getMonth() &&
+                orderDate.getFullYear() === yesterday.getFullYear()
+            );
+        });
+    }, [orders]);
+
+    const percentageWithYesterday: number = useMemo(() => {
+        if (ordersToday.length === 0 || orderYesterday.length === 0) return 0;
+        const yesterdayCount = orderYesterday.length;
+        const todayCount = ordersToday.length;
+        const percentage = ((todayCount - yesterdayCount) / yesterdayCount) * 100;
+        return parseFloat(percentage.toFixed(2));
+    }, [ordersToday.length, orderYesterday.length]);
+
+    const inProcessOrders = useMemo(() => {
+        return orders.filter((order) => order.status === OrderStatus.PENDING);
+    }, [orders]);
+
+    const totalRevenue = useMemo(() => {
+        return orders.reduce((acc, order) => {
+            return acc + order.subtotal;
+        }, 0);
+    }, [orders]);
+
+    const totalRevenueToday = useMemo(() => {
+        return ordersToday.reduce((acc, order) => {
+            return acc + order.subtotal;
+        }, 0);
+    }, [ordersToday]);
+
+    const recentOrders = useMemo(() => {
+        return ordersFullInfo.slice(0, 3);
+    }, [ordersFullInfo]);
+
     return {
         loading,
         error,
         orders,
         ordersFullInfo,
+        ordersToday,
+        orderYesterday,
+        percentageWithYesterday,
+        inProcessOrders,
+        totalRevenue,
+        totalRevenueToday,
+        recentOrders,
         createOrder,
         fetchOrders,
         deleteOrder,

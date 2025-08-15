@@ -1,16 +1,17 @@
 'use client';
 
 import Button from '@/components/ui/Button';
+import { DotsLoading } from '@/components/ui/Loading';
 import CreateOrderModal from '@/features/orders/components/modal/CreateOrderModal';
 import OrderFilters from '@/features/orders/components/OrderFilters';
 import OrdersTable from '@/features/orders/components/OrdersTable';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { BiSolidLayerPlus } from 'react-icons/bi';
 
 export default function Orders() {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <>
+        <Suspense fallback={<DotsLoading />}>
             <div className='mb-6'>
                 <div className='flex items-center justify-between'>
                     <div>
@@ -34,6 +35,6 @@ export default function Orders() {
             {isOpen && (
                 <CreateOrderModal isOpen={isOpen} isUpdate={false} orderInfo={null} onClose={() => setIsOpen(false)} />
             )}
-        </>
+        </Suspense>
     );
 }

@@ -3,23 +3,17 @@
 import { FiHome, FiShoppingBag, FiUsers, FiBox, FiCreditCard, FiTruck, FiDollarSign, FiSettings } from 'react-icons/fi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-export default function Sidebar({
-    sidebarOpen,
-    setSidebarOpen,
-}: {
-    sidebarOpen: boolean;
-    setSidebarOpen: (open: boolean) => void;
-}) {
+export default function Sidebar() {
     const pathname = usePathname();
 
     const navItems = [
         { name: 'Dashboard', icon: FiHome, path: '/dashboard' },
         { name: 'Đơn hàng', icon: FiShoppingBag, path: '/orders' },
         { name: 'Khách hàng', icon: FiUsers, path: '/customers' },
-        { name: 'Sản phẩm', icon: FiBox, path: '/products' },
-        { name: 'Thanh toán', icon: FiCreditCard, path: '/payments' },
-        { name: 'Vận chuyển', icon: FiTruck, path: '/shipping' },
-        { name: 'Tài khoản ngân hàng', icon: FiDollarSign, path: '/bank-accounts' },
+        // { name: 'Sản phẩm', icon: FiBox, path: '/products' },
+        // { name: 'Thanh toán', icon: FiCreditCard, path: '/payments' },
+        // { name: 'Vận chuyển', icon: FiTruck, path: '/shipping' },
+        // { name: 'Tài khoản ngân hàng', icon: FiDollarSign, path: '/bank-accounts' },
         { name: 'Cài đặt', icon: FiSettings, path: '/settings' },
     ];
 

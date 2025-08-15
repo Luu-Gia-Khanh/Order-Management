@@ -1,6 +1,7 @@
 'use client';
 
 import { Customer } from '@/features/customers/types/Customer';
+import { formatDate } from '@/utils/date.util';
 import { useMemo } from 'react';
 
 type CustomerSearchTableProps = {
@@ -110,7 +111,7 @@ export default function CustomerSearchTable({ searchValue, customers, onSelectCu
                                                 className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'
                                             >
                                                 {value instanceof Date
-                                                    ? value.toLocaleDateString() // hoặc toISOString(), format bạn muốn
+                                                    ? formatDate(value) // hoặc toISOStr
                                                     : value || ''}
                                             </td>
                                         );

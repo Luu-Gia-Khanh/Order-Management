@@ -1,5 +1,6 @@
 'use client';
 
+import { formatDate } from '@/utils/date.util';
 import { Customer } from '../types/Customer';
 
 export default function CustomerTable({ customers }: { customers: Customer[] }) {
@@ -99,9 +100,7 @@ export default function CustomerTable({ customers }: { customers: Customer[] }) 
                                                 key={column.key}
                                                 className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'
                                             >
-                                                {value instanceof Date
-                                                    ? value.toLocaleDateString() // hoặc toISOString(), format bạn muốn
-                                                    : value || ''}
+                                                {value instanceof Date ? formatDate(value) : value || ''}
                                             </td>
                                         );
                                     }

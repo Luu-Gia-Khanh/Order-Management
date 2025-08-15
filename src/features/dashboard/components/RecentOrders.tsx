@@ -1,30 +1,10 @@
+import { useOrderManager } from '@/features/orders/hook/useOrderManager';
+import { formatCurrency } from '@/utils/currency.util';
+import { formatDate } from '@/utils/date.util';
+import { mapingOrderStatus, statusColors } from '@/utils/status.util';
+
 export default function RecentOrders() {
-    const orders = [
-        {
-            id: 'DH001',
-            customer: 'Nguyễn Văn A',
-            date: '15/12/2024',
-            status: 'Hoàn thành',
-            statusColor: 'bg-green-100 text-green-800',
-            amount: '2,500,000đ',
-        },
-        {
-            id: 'DH002',
-            customer: 'Trần Thị B',
-            date: '15/12/2024',
-            status: 'Đang xử lý',
-            statusColor: 'bg-yellow-100 text-yellow-800',
-            amount: '1,800,000đ',
-        },
-        {
-            id: 'DH003',
-            customer: 'Lê Văn C',
-            date: '14/12/2024',
-            status: 'Đang giao',
-            statusColor: 'bg-blue-100 text-blue-800',
-            amount: '3,200,000đ',
-        },
-    ];
+    const { recentOrders } = useOrderManager();
 
     return (
         <div>
@@ -44,17 +24,19 @@ export default function RecentOrders() {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map((order) => (
+                        {recentOrders.map((order) => (
                             <tr key={order.id} className='border-b border-gray-50'>
                                 <td className='py-4 text-sm font-medium text-gray-800'>#{order.id}</td>
-                                <td className='py-4 text-sm text-gray-600'>{order.customer}</td>
-                                <td className='py-4 text-sm text-gray-600'>{order.date}</td>
+                                <td className='py-4 text-sm text-gray-600'>{order.customer.name}</td>
+                                <td className='py-4 text-sm text-gray-600'>{formatDate(order.createdAt)}</td>
                                 <td className='py-4'>
-                                    <span className={`px-2 py-1 ${order.statusColor} text-xs rounded-full`}>
-                                        {order.status}
+                                    <span className={`px-2 py-1 ${statusColors(order.status)} text-xs rounded-full`}>
+                                        {mapingOrderStatus(order.status)}
                                     </span>
                                 </td>
-                                <td className='py-4 text-sm font-medium text-gray-800 text-right'>{order.amount}</td>
+                                <td className='py-4 text-sm font-medium text-gray-800 text-right'>
+                                    {formatCurrency(order.totalAmount)}
+                                </td>
                             </tr>
                         ))}
                     </tbody>

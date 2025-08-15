@@ -43,3 +43,7 @@ body {
   .animate-slideIn {
     animation: slideIn 0.3s ease-out;
   }
+
+/* #__next-build-watcher, [data-nextjs-dev-overlay] {
+  display: none !important;
+} */
